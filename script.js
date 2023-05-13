@@ -8,10 +8,11 @@ const textToSpeech = require('@google-cloud/text-to-speech');
 const fs = require('fs');
 const util = require('util');
 
+let title = "Metals"
 // Creates a client
 const client = new textToSpeech.TextToSpeechClient();
 
-const text = fs.readFileSync('texto.txt', 'utf-8')
+const text = fs.readFileSync(`./textos/${title}.txt`, 'utf-8')
 
 
 
@@ -35,12 +36,11 @@ async function quickStart() {
       speakingRate: 0.9
     },
   };
-let title = "Yellowstone National Park"
   // Performs the text-to-speech request
   const [response] = await client.synthesizeSpeech(request);
   // Write the binary audio content to a local file
   const writeFile = util.promisify(fs.writeFile);
   await writeFile(`./audios/${title}.mp3`, response.audioContent, 'binary');
-  console.log('Audio content written to file: output.mp3');
+  console.log(`Audio content written to file: ${title}.mp3`);
 }
 quickStart();
